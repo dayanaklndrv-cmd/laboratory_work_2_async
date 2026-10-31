@@ -47,8 +47,14 @@ def heavy_compute() -> int:
 
 async def handle_request(client: str, duration: float) -> None:
     log(f"{client}: запрос принят")
-    await asyncio.sleep(duration)
-    log(f"{client}: ответ отправлен")
+    # await asyncio.sleep(duration)
+    # log(f"{client}: ответ отправлен")
+    if client == 'bob':
+        # запук в отдельном потоке
+        await asyncio.to_thread(heavy_compute)
+    else:
+        await asyncio.sleep(duration)
+    log(f'{client}: ответ отправлен')
 
 
 async def main() -> None:
